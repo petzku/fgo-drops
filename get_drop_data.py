@@ -34,13 +34,14 @@ quest_regex = re.compile(r'href="(.+?)".*?>([^<]+)')
 for section in by_sections:
     if not section: continue
 
-    title = re.search(r'^[^<]+', section, re.MULTILINE)
-    if not title:
+    title_match = re.search(r'^[^<]+', section, re.MULTILINE)
+    if not title_match:
         print("!! error, no title found in lines:")
         print('\n'.join('\t'+s for s in section.splitlines()[:3]))
         print()
+        continue
     else:
-        title = title.group(0)
+        title = title_match.group(0)
         print("Found title: " + title)
 
     quests = []

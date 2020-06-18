@@ -29,11 +29,15 @@ PATH_PREFIX = ""
 DROPS_FILE = PATH_PREFIX + "drops.json"
 
 # you can add items to ignore here if you want
-BLACKLIST = ["Great Knight Medal", "Forbidden Page"]
+BLACKLIST: List[str] = ["Great Knight Medal", "Forbidden Page"]
+
 # or here to ignore everything except these
-WHITELIST = [] # for simplicity: stuff works if next line commented
+# this one is for simplicity: stuff works if second line is commented
+WHITELIST: List[str] = []
 # WHITELIST = ["Eternal Ice", "Void's Dust", "Ring of Giants", "Aurora Steel"]
-OUTPUT = ["Eternal Ice", "Void's Dust", "Ring of Giants", "Aurora Steel"]
+
+# show these items as output in terminal
+OUTPUT: List[str] = ["Eternal Ice", "Void's Dust", "Ring of Giants", "Aurora Steel"]
 
 # we don't want to consider these because of the high APD bias
 CLASSES = ("Saber", "Caster", "Lancer", "Archer", "Assassin", "Rider", "Berserker")
