@@ -29,9 +29,11 @@ PATH_PREFIX = "fgo-drops/"
 DROPS_FILE  = "drops.json"
 
 # you can add items to ignore here if you want
-BLACKLIST = []
+BLACKLIST = ["Great Knight Medal", "Forbidden Page"]
 # or here to ignore everything except these
-WHITELIST = ["Phoenix Feather", "Seed of Yggdrasil", "Claw of Chaos"]
+WHITELIST = [] # for simplicity: stuff works if next line commented
+# WHITELIST = ["Eternal Ice", "Void's Dust", "Ring of Giants", "Aurora Steel"]
+OUTPUT = ["Eternal Ice", "Void's Dust", "Ring of Giants", "Aurora Steel"]
 
 # we don't want to consider these because of the high APD bias
 CLASSES = ("Saber", "Caster", "Lancer", "Archer", "Assassin", "Rider", "Berserker")
