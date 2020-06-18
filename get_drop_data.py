@@ -14,7 +14,7 @@ import re
 from typing import Dict, List, Tuple
 
 BASE_URL = "https://gamepress.gg/grandorder"
-PATH_PREFIX = "fgo-drops/"
+PATH_PREFIX = ""
 
 # start by getting all free quests
 # TODO: possibly consider daily (material) quests too

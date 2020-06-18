@@ -25,8 +25,8 @@ APCost = int
 QuestInfo = Tuple[APCost, DropTable]
 SectionInfo = Dict[str, QuestInfo]
 
-PATH_PREFIX = "fgo-drops/"
-DROPS_FILE  = PATH_PREFIX + "drops.json"
+PATH_PREFIX = ""
+DROPS_FILE = PATH_PREFIX + "drops.json"
 
 # you can add items to ignore here if you want
 BLACKLIST = ["Great Knight Medal", "Forbidden Page"]
