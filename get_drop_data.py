@@ -14,6 +14,7 @@ import re
 from typing import Dict, List, Tuple
 
 BASE_URL = "https://gamepress.gg/grandorder"
+PATH_PREFIX = "fgo-drops/"
 
 # start by getting all free quests
 # TODO: possibly consider daily (material) quests too
@@ -90,7 +91,7 @@ for title, quests in fqs.items():
     print("done:", title)
 
 import json
-with open('drops.json', 'w') as fo:
+with open(PATH_PREFIX + 'drops.json', 'w') as fo:
     print("exporting json...", end=" ")
     json.dump(drops, fo)
     print("done")
