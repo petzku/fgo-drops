@@ -89,7 +89,8 @@ best_spot_by_item: Dict[str, LocationEfficiency] = {}
 locations_efficiency: Dict[str, List[LocationEfficiency]] = {}
 
 for iname, locs in locations.items():
-    effs = [(l, efficiency[l], apd) for l, apd in locs.items()]
+    # XXX: filter out efficiency < 1.0 places
+    effs = [(l, efficiency[l], apd) for l, apd in locs.items() if efficiency[l] >= 1.0]
     effs.sort(key=lambda x: x[1], reverse=True)
 
     # best = max(locs, key=lambda l: efficiency[l])
