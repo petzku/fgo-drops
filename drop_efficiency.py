@@ -44,7 +44,7 @@ CLASSES = ("Saber", "Caster", "Lancer", "Archer", "Assassin", "Rider", "Berserke
 PREFIX_DROPS = ("Blaze of Wisdom - Gold", "Gem of", "Magic Gem of", "Secret Gem of")
 POSTFIX_DROPS = ("Piece", "Monument")
 BLACKLIST += [t + " " + c for t in PREFIX_DROPS for c in CLASSES]
-BLACKLIST += [c + " " + t for t in POSTFIX_DROPS for c in CLASSES ]
+BLACKLIST += [c + " " + t for t in POSTFIX_DROPS for c in CLASSES]
 
 with open(DROPS_FILE, "r") as fo:
     drop_data: Dict[str, SectionInfo] = json.load(fo)
@@ -68,10 +68,6 @@ for sname, sdata in drop_data.items():
                 locations[iname] = {}
             locations[iname][node_name] = apd
 
-# write these out I guess
-output_json(best_APD, "apd.json")
-output_json(locations, "locations.json")
-
 efficiency: Dict[str, float] = {}
 
 for sname, sdata in drop_data.items():
@@ -86,8 +82,6 @@ for sname, sdata in drop_data.items():
         eff = total_ap_value / ap
         efficiency[node_name] = eff
 
-output_json(efficiency, "efficiency.json")
-
 # location name, efficiency rating, specific item APD
 LocationEfficiency = Tuple[str, float, float]
 
@@ -99,11 +93,12 @@ for iname, locs in locations.items():
     effs = [(l, efficiency[l], apd) for l, apd in locs.items() if efficiency[l] >= 1.0]
     effs.sort(key=lambda x: x[1], reverse=True)
 
-    # best = max(locs, key=lambda l: efficiency[l])
-    # best_spot_by_item[iname] = (best, efficiency[best])
     best_spot_by_item[iname] = effs[0]
     locations_efficiency[iname] = effs
 
+output_json(best_APD, "apd.json")
+output_json(locations, "locations.json")
+output_json(efficiency, "efficiency.json")
 output_json(best_spot_by_item, "best_locations.json")
 output_json(locations_efficiency, "locations_efficiency.json")
 
@@ -111,5 +106,3 @@ for item in OUTPUT:
     print("#", item)
     for name,eff,apd in locations_efficiency[item]:
         print("  {:50.50s} -- {:4.2f} {:5.1f}".format(name, eff, apd))
-
-# print(best_spot_by_item['Phoenix Feather'])
