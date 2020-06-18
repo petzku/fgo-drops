@@ -22,7 +22,7 @@ pagetext = requests.get(BASE_URL + "/free-quests").text
 pagetext = html.unescape(pagetext)
 
 start_str = '<div class="view-grouping-header"><div id="1776"></div>' # start of Fuyuki block
-end_str = '<div class="view-grouping-header"><div id="7611"></div>'   # start of LB2 block
+end_str = '<div class="view-grouping-header"><div id="7616"></div>'   # start of LB3 block
 pagetext = start_str + pagetext.split(start_str)[1].split(end_str)[0]
 
 fqs = {}
@@ -65,6 +65,8 @@ ap_regex = re.compile(r'>(\d+)<')
 item_regex = re.compile(r'"en">([^<]+)</a> (?:x\d )?(?:([\d.]+)%)?')
 
 for title, quests in fqs.items():
+    if title.startswith("Lostbelt"):
+        title = title.split(": ", 1)[1]
     print("starting:", title)
     ds: SectionInfo = {}
     for name, url in quests:
