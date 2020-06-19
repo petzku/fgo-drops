@@ -22,8 +22,8 @@ PATH_PREFIX = ""
 pagetext = requests.get(BASE_URL + "/free-quests").text
 pagetext = html.unescape(pagetext)
 
-start_str = '<div class="view-grouping-header"><div id="1776"></div>' # start of Fuyuki block
-end_str = '<div class="view-grouping-header"><div id="7616"></div>'   # start of LB3 block
+start_str = '<div class="view-grouping-header"><div id="1776"></div>'  # start of Fuyuki block
+end_str = '<div class="view-grouping-header"><div id="7616"></div>'    # start of LB3 block
 pagetext = start_str + pagetext.split(start_str)[1].split(end_str)[0]
 
 fqs = {}
@@ -32,7 +32,8 @@ by_sections = pagetext.split('<div class="view-grouping-header">')
 quest_regex = re.compile(r'href="(.+?)".*?>([^<]+)')
 
 for section in by_sections:
-    if not section: continue
+    if not section:
+        continue
 
     title_match = re.search(r'^[^<]+', section, re.MULTILINE)
     if not title_match:
@@ -47,14 +48,14 @@ for section in by_sections:
     quests = []
     for line in section.splitlines():
         if "/quest/" in line:
-            (url,name), = quest_regex.findall(line)
+            (url, name), = quest_regex.findall(line)
             url = url.replace('/grandorder', '')
-            quests.append((name,url))
+            quests.append((name, url))
     fqs[title] = quests
 
 for t, qs in fqs.items():
     print(t)
-    print('\n'.join('\t%s (%s)' % (n, u) for n,u in qs))
+    print('\n'.join('\t%s (%s)' % (n, u) for (n, u) in qs))
 
 # type variables
 DropTable = Dict[str, float]
@@ -75,7 +76,7 @@ for title, quests in fqs.items():
         droptable: DropTable = {}
         pagetext = html.unescape(requests.get(BASE_URL + url).text)
         quest_drops_text = pagetext.split("Quest Drops")[1].split("Quest Reward")[0]
-        
+
         ap_text: str = pagetext.split("AP Cost")[1].splitlines()[1]
         ap_cost: int = int(ap_regex.findall(ap_text)[0])
 
@@ -91,8 +92,8 @@ for title, quests in fqs.items():
     drops[title] = ds
     print("done:", title)
 
-import json
 with open(PATH_PREFIX + 'drops.json', 'w') as fo:
+    import json
     print("exporting json...", end=" ")
     json.dump(drops, fo)
     print("done")

@@ -3,8 +3,9 @@
 """
 Figure out most efficient places for farming materials in FGO.
 
-Use drop data from Gamepress. Calculate APD values ourselves for higher precision.
-Node efficiency takes into account all materials, but not EXP, pieces/monuments, QP or gems.
+Use drop data from Gamepress. Calculate APD values ourselves for higher
+precision. Node efficiency takes into account all materials, but not EXP,
+pieces/monuments, QP or gems.
 NOTE: gem consideration may change.
 
 Best node for material X is determined to be not its best single APD node,
@@ -13,6 +14,7 @@ but the highest total AP efficient node that drops that material.
 
 import json
 from typing import Dict, Tuple, List, Any
+
 
 def output_json(object: Any, filename: str) -> None:
     with open(PATH_PREFIX + filename, 'w') as fo:
@@ -90,7 +92,7 @@ locations_efficiency: Dict[str, List[LocationEfficiency]] = {}
 
 for iname, locs in locations.items():
     # XXX: filter out efficiency < 1.0 places
-    effs = [(l, efficiency[l], apd) for l, apd in locs.items() if efficiency[l] >= 1.0]
+    effs = [(loc, efficiency[loc], apd) for loc, apd in locs.items() if efficiency[loc] >= 1.0]
     effs.sort(key=lambda x: x[1], reverse=True)
 
     best_spot_by_item[iname] = effs[0]
@@ -104,5 +106,5 @@ output_json(locations_efficiency, "locations_efficiency.json")
 
 for item in OUTPUT:
     print("#", item)
-    for name,eff,apd in locations_efficiency[item]:
+    for (name, eff, apd) in locations_efficiency[item]:
         print("  {:50.50s} -- {:4.2f} {:5.1f}".format(name, eff, apd))
