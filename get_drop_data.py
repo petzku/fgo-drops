@@ -26,7 +26,7 @@ start_str = '<div class="view-grouping-header"><div id="1776"></div>'  # start o
 end_str = '<div class="view-grouping-header"><div id="7616"></div>'    # start of LB3 block
 pagetext = start_str + pagetext.split(start_str)[1].split(end_str)[0]
 
-fqs = {}
+fqs: Dict[str, List[Tuple[str, str]]] = {}
 by_sections = pagetext.split('<div class="view-grouping-header">')
 
 quest_regex = re.compile(r'href="(.+?)".*?>([^<]+)')
