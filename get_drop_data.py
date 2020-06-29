@@ -12,9 +12,7 @@ import html
 import re
 
 from typing import Dict, List, Tuple
-
-BASE_URL = "https://gamepress.gg/grandorder"
-PATH_PREFIX = ""
+from config import BASE_URL, DROPS_FILE
 
 # start by getting all free quests
 # TODO: possibly consider daily (material) quests too
@@ -92,7 +90,7 @@ for title, quests in fqs.items():
     drops[title] = ds
     print("done:", title)
 
-with open(PATH_PREFIX + 'drops.json', 'w') as fo:
+with open(DROPS_FILE, 'w') as fo:
     import json
     print("exporting json...", end=" ")
     json.dump(drops, fo)

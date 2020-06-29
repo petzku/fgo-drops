@@ -14,6 +14,7 @@ but the highest total AP efficient node that drops that material.
 
 import json
 from typing import Dict, Tuple, List, Any
+from config import PATH_PREFIX, DROPS_FILE, BLACKLIST, WHITELIST, OUTPUT
 
 
 def output_json(object: Any, filename: str) -> None:
@@ -26,27 +27,6 @@ DropTable = Dict[str, float]
 APCost = int
 QuestInfo = Tuple[APCost, DropTable]
 SectionInfo = Dict[str, QuestInfo]
-
-PATH_PREFIX = ""
-DROPS_FILE = PATH_PREFIX + "drops.json"
-
-# you can add items to ignore here if you want
-BLACKLIST: List[str] = ["Great Knight Medal", "Forbidden Page"]
-
-# or here to ignore everything except these
-# this one is for simplicity: stuff works if second line is commented
-WHITELIST: List[str] = []
-# WHITELIST = ["Eternal Ice", "Void's Dust", "Giant's Ring", "Aurora Steel"]
-
-# show these items as output in terminal
-OUTPUT: List[str] = ["Eternal Ice", "Void's Dust", "Giant's Ring", "Aurora Steel"]
-
-# we don't want to consider these because of the high APD bias
-CLASSES = ("Saber", "Caster", "Lancer", "Archer", "Assassin", "Rider", "Berserker")
-PREFIX_DROPS = ("Blaze of Wisdom - Gold", "Gem of", "Magic Gem of", "Secret Gem of")
-POSTFIX_DROPS = ("Piece", "Monument")
-BLACKLIST += [t + " " + c for t in PREFIX_DROPS for c in CLASSES]
-BLACKLIST += [c + " " + t for t in POSTFIX_DROPS for c in CLASSES]
 
 with open(DROPS_FILE, "r") as fo:
     drop_data: Dict[str, SectionInfo] = json.load(fo)
