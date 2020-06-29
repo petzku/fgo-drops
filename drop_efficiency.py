@@ -36,10 +36,10 @@ BLACKLIST: List[str] = ["Great Knight Medal", "Forbidden Page"]
 # or here to ignore everything except these
 # this one is for simplicity: stuff works if second line is commented
 WHITELIST: List[str] = []
-# WHITELIST = ["Eternal Ice", "Void's Dust", "Ring of Giants", "Aurora Steel"]
+# WHITELIST = ["Eternal Ice", "Void's Dust", "Giant's Ring", "Aurora Steel"]
 
 # show these items as output in terminal
-OUTPUT: List[str] = ["Eternal Ice", "Void's Dust", "Ring of Giants", "Aurora Steel"]
+OUTPUT: List[str] = ["Eternal Ice", "Void's Dust", "Giant's Ring", "Aurora Steel"]
 
 # we don't want to consider these because of the high APD bias
 CLASSES = ("Saber", "Caster", "Lancer", "Archer", "Assassin", "Rider", "Berserker")
