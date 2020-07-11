@@ -8,10 +8,10 @@ Calculates the APD (average AP per drop) for each material based on the best nod
 
 Needs python 3 to run. Version 3.6 or newer definitely works, older ones might too.
 
-To use, first run `get_drop_rates.py` to fetch the drop data from Gamepress, then run `drop_efficiency.py` to get the results:
+To use, first run `get_drop_data.py` to fetch the drop data from Gamepress, then run `drop_efficiency.py` to get the results:
 
 ```sh
-$ python3 get_drop_rates.py
+$ python3 get_drop_data.py
 
 Found title: Fuyuki
 Found title: Orleans
