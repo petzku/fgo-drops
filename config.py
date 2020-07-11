@@ -6,7 +6,7 @@ from typing import List
 PATH_PREFIX = ""
 
 # you can add items to ignore here if you want
-BLACKLIST: List[str] = ["Great Knight Medal", "Forbidden Page"]
+BLACKLIST: List[str] = []
 
 # or here to ignore everything except these
 # this one is for simplicity: stuff works if second line is commented
