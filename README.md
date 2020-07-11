@@ -32,7 +32,7 @@ $ python3 drop_efficiency.py
   Gotterdammerung -- Viaduct of Ice                  -- 1.00  54.0
 ```
 
-The latter script outputs some data to the console (specified in the `OUTPUT` list in `config.py`). The default list at the time of writing is the non-gold materials required for maxing Skadi.
+The latter script outputs data on some materials to the console (specified in the `OUTPUT` list in `config.py`). The output format is `<Singularity> -- <Quest name> -- <AP efficiency> <material APD>`. The default material list at the time of writing is the non-gold materials required for maxing Skadi.
 
 The script outputs all the data into some JSON files. The most interesting one of these is probably `locations_efficiency.json`. It contains data like the following (reformatted):
 
