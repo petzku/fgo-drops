@@ -64,16 +64,23 @@ SectionInfo = Dict[str, QuestInfo]
 drops: Dict[str, SectionInfo] = {}
 ap_regex = re.compile(r'>(\d+)<')
 item_regex = re.compile(r'"en">([^<]+)</a> (?:x\d )?(?:([\d.]+)%)?')
+location_regex = re.compile(r'<a[^<]+href="([^\"]*)"[^<]*>([^<]+)</a>')
 
 for title, quests in fqs.items():
     if title.startswith("Lostbelt"):
         title = title.split(": ", 1)[1]
     print("starting:", title)
+    location_filter_regex = re.compile(r'{:s} - (.+)'.format(title))
     ds: SectionInfo = {}
     for name, url in quests:
         droptable: DropTable = {}
         pagetext = html.unescape(requests.get(BASE_URL + url).text)
         quest_drops_text = pagetext.split("Quest Drops")[1].split("Quest Reward")[0]
+        location_text = pagetext.split("<div id=\"main-quest\">")[1].split("AP Cost")[0]
+        (lurl, lname), = location_regex.findall(location_text)
+        namefilter_match = location_filter_regex.match(lname)
+        if namefilter_match:
+            lname = namefilter_match.group(1)
 
         ap_text: str = pagetext.split("AP Cost")[1].splitlines()[1]
         ap_cost: int = int(ap_regex.findall(ap_text)[0])
@@ -86,7 +93,7 @@ for title, quests in fqs.items():
                     print("on line:", repr(line))
                 else:
                     droptable[iname] = float(chance)/100
-        ds[name] = (ap_cost, droptable)
+        ds[lname + ": " + name] = (ap_cost, droptable)
     drops[title] = ds
     print("done:", title)
 
