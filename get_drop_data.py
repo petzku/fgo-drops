@@ -93,7 +93,7 @@ for title, quests in fqs.items():
                     print("on line:", repr(line))
                 else:
                     droptable[iname] = float(chance)/100
-        ds[lname +": "+ name] = (ap_cost, droptable)
+        ds[lname + ": " + name] = (ap_cost, droptable)
     drops[title] = ds
     print("done:", title)
 
