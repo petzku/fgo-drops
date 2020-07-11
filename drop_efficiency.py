@@ -14,7 +14,7 @@ but the highest total AP efficient node that drops that material.
 
 import json
 from typing import Dict, Tuple, List, Any
-from config import PATH_PREFIX, DROPS_FILE, BLACKLIST, WHITELIST, OUTPUT
+from config import PATH_PREFIX, DROPS_FILE, BLACKLIST, WHITELIST, OUTPUT, EFFICIENCY_THRESHOLD
 
 
 def output_json(object: Any, filename: str) -> None:
@@ -71,8 +71,8 @@ best_spot_by_item: Dict[str, LocationEfficiency] = {}
 locations_efficiency: Dict[str, List[LocationEfficiency]] = {}
 
 for iname, locs in locations.items():
-    # XXX: filter out efficiency < 1.0 places
-    effs = [(loc, efficiency[loc], apd) for loc, apd in locs.items() if efficiency[loc] >= 1.0]
+    # XXX: filter out efficiency < EFFICIENCY_THRESHOLD places
+    effs = [(loc, efficiency[loc], apd) for loc, apd in locs.items() if efficiency[loc] >= EFFICIENCY_THRESHOLD]
     effs.sort(key=lambda x: x[1], reverse=True)
 
     best_spot_by_item[iname] = effs[0]

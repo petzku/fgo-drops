@@ -16,6 +16,8 @@ WHITELIST: List[str] = []
 # show these items as output in terminal
 OUTPUT: List[str] = ["Eternal Ice", "Void's Dust", "Giant's Ring", "Aurora Steel"]
 
+# lower this if you want to show bad nodes (so you can tell your friends not to run them or whatever)
+EFFICIENCY_THRESHOLD = 1
 
 # === You can ignore stuff after this part ===
 
