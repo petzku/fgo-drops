@@ -36,7 +36,7 @@ locations: Dict[str, Dict[str, float]] = {}  # item name -> (node name -> APD)
 
 for sname, sdata in drop_data.items():
     for (name, (ap, drops)) in sdata.items():
-        node_name = sname + " -- " + name
+        node_name = sname + " - " + name
         for iname, rate in drops.items():
             if WHITELIST:
                 if iname not in WHITELIST:
@@ -54,7 +54,7 @@ efficiency: Dict[str, float] = {}
 
 for sname, sdata in drop_data.items():
     for (name, (ap, drops)) in sdata.items():
-        node_name = sname + " -- " + name
+        node_name = sname + " - " + name
         # this wasn't always this ugly...
         total_ap_value = sum(
             best_APD[iname][0] * rate
@@ -87,4 +87,6 @@ output_json(locations_efficiency, "locations_efficiency.json")
 for item in OUTPUT:
     print("#", item)
     for (name, eff, apd) in locations_efficiency[item]:
-        print("  {:50.50s} -- {:4.2f} {:5.1f}".format(name, eff, apd))
+        if len(name) > 60:
+            name = name[:57] + "..."
+        print("  {:60.60s} -- {:4.2f} {:5.1f}".format(name, eff, apd))
