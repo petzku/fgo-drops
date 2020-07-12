@@ -22,6 +22,16 @@ def output_json(object: Any, filename: str) -> None:
         json.dump(object, fo, indent='\t')
 
 
+def check_include(itemname: str) -> bool:
+    """ returns True if item should be included, False if not """
+    if WHITELIST:
+        if itemname not in WHITELIST:
+            return False
+    elif itemname in BLACKLIST:
+        return False
+    return True
+
+
 # type variables
 DropTable = Dict[str, float]
 APCost = int
@@ -38,11 +48,9 @@ for sname, sdata in drop_data.items():
     for (name, (ap, drops)) in sdata.items():
         node_name = sname + " - " + name
         for iname, rate in drops.items():
-            if WHITELIST:
-                if iname not in WHITELIST:
-                    continue
-            elif iname in BLACKLIST:
+            if not check_include(iname):
                 continue
+
             apd = ap / rate
             if iname not in best_APD or best_APD[iname][0] > apd:
                 best_APD[iname] = (apd, node_name)
@@ -55,11 +63,10 @@ efficiency: Dict[str, float] = {}
 for sname, sdata in drop_data.items():
     for (name, (ap, drops)) in sdata.items():
         node_name = sname + " - " + name
-        # this wasn't always this ugly...
         total_ap_value = sum(
             best_APD[iname][0] * rate
             for iname, rate in drops.items()
-            if (iname in WHITELIST if WHITELIST else iname not in BLACKLIST)
+            if check_include(iname)
         )
         eff = total_ap_value / ap
         efficiency[node_name] = eff
@@ -71,8 +78,10 @@ best_spot_by_item: Dict[str, LocationEfficiency] = {}
 locations_efficiency: Dict[str, List[LocationEfficiency]] = {}
 
 for iname, locs in locations.items():
-    # XXX: filter out efficiency < EFFICIENCY_THRESHOLD places
-    effs = [(loc, efficiency[loc], apd) for loc, apd in locs.items() if efficiency[loc] >= EFFICIENCY_THRESHOLD]
+    # filter out efficiency < EFFICIENCY_THRESHOLD places
+    effs = [(loc, efficiency[loc], apd)
+            for loc, apd in locs.items()
+            if efficiency[loc] >= EFFICIENCY_THRESHOLD]
     effs.sort(key=lambda x: x[1], reverse=True)
 
     best_spot_by_item[iname] = effs[0]
