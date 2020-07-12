@@ -111,12 +111,14 @@ def main():
     output_json(best_spot_by_item, "best_locations.json")
     output_json(locations_efficiency, "locations_efficiency.json")
 
+    longest = min(60, max(len(name) for item in OUTPUT for name in drop_locations[item].keys()))
+
     for item in OUTPUT:
         print("#", item)
         for (name, eff, apd) in locations_efficiency[item]:
-            if len(name) > 60:
-                name = name[:57] + "..."
-            print("  {:60.60s} -- {:4.2f} {:5.1f}".format(name, eff, apd))
+            if len(name) > longest:
+                name = name[:longest - 3] + "..."
+            print("  {name:{length}.{length}s} -- {eff:4.2f} {apd:5.1f}".format(name=name, eff=eff, apd=apd, length=longest))
 
 
 if __name__ == "__main__":
