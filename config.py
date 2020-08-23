@@ -21,6 +21,8 @@ EFFICIENCY_THRESHOLD = 1
 
 # === You can ignore stuff after this part ===
 
+DEBUG_MODE = False
+
 BASE_URL = "https://gamepress.gg/grandorder"
 DROPS_FILE = PATH_PREFIX + "drops.json"
 
