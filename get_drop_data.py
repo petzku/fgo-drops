@@ -5,7 +5,7 @@ Get drop rate info from Gamepress.
 
 Made for use with drop_efficiency.py, but should work for other stuff too
 """
-import requests
+from urllib.request import urlopen, Request
 import html
 
 # TODO: maybe parse properly instead of regex shit
@@ -17,7 +17,8 @@ from config import BASE_URL, DROPS_FILE
 # start by getting all free quests
 # TODO: possibly consider daily (material) quests too
 
-pagetext = requests.get(BASE_URL + "/free-quests").text
+req = Request(BASE_URL + "/free-quests", headers={'User-Agent': 'Mozilla/5.0'})
+pagetext = urlopen(req).read().decode('utf-8')
 pagetext = html.unescape(pagetext)
 
 start_str = '<div class="view-grouping-header"><div id="1776"></div>'  # start of Fuyuki block
@@ -74,7 +75,8 @@ for title, quests in fqs.items():
     ds: SectionInfo = {}
     for name, url in quests:
         droptable: DropTable = {}
-        pagetext = html.unescape(requests.get(BASE_URL + url).text)
+        req = Request(BASE_URL + url, headers={'User-Agent': 'Mozilla/5.0'})
+        pagetext = html.unescape(urlopen(req).read().decode('utf-8'))
         quest_drops_text = pagetext.split("Quest Drops")[1].split("Quest Reward")[0]
         location_text = pagetext.split("<div id=\"main-quest\">")[1].split("AP Cost")[0]
         (lurl, lname), = location_regex.findall(location_text)
